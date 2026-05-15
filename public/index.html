@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000">
+    <title>Urbanix- Premium Streetwear </title>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon-128.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Barlow+Condensed:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
+</head>
+
+<body>
+
+    <!-- Mobile nav overlay -->
+    <div class="nav-overlay" id="nav-overlay" onclick="closeMobileMenu()"></div>
+
+    <div id="loader">
+        <div class="loader-logo">URBANIX</div>
+        <div class="loader-bar-wrap">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <div id="cart-overlay" onclick="closeCart()"></div>
+    <div id="wish-overlay" onclick="closeWishlist()"></div>
+
+    <div id="cart-panel">
+        <div class="cart-header">
+            <span class="cart-title">YOUR BAG</span>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cart-items-list">
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛍</div>
+                <p>Your bag is empty.</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="cart-total-label">Total</span>
+                <span class="cart-total-val" id="cart-total">₹0</span>
+            </div>
+            <button class="btn-checkout" onclick="checkout()">Proceed to Checkout →</button>
+        </div>
+    </div>
+
+    <div id="wishlist-panel">
+        <div class="wish-header">
+            <span class="wish-title">WISHLIST</span>
+            <button class="wish-close" onclick="closeWishlist()">✕</button>
+        </div>
+        <div class="wish-items" id="wishlist-items-list">
+            <div class="wish-empty">
+                <div class="cart-empty-icon">♡</div>
+                <p>Your wishlist is empty.</p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="global-nav">
+        <div class="nav-left">
+            <a href="#" class="nav-logo">URBANIX</a>
+            <span class="nav-tagline">Top Streetwear Culture</span>
+        </div>
+
+        <div class="nav-center">
+            <div class="nav-search-wrap">
+                <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" style="cursor:pointer; pointer-events:auto;"
+                    onclick="handleGlobalSearch(this.nextElementSibling.value)">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input type="text" class="nav-search-input" id="global-search-input" placeholder="Search Urbanix..."
+                    onkeyup="if(event.key==='Enter') handleGlobalSearch(this.value)">
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <button class="mobile-search-trigger" onclick="toggleMobileSearch(true)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+            </button>
+            <div class="menu-toggle" id="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="javascript:void(0)" class="nav-link" data-route="home" onclick="navigate('home')">Home</a>
+                <a href="javascript:void(0)" class="nav-link" data-route="collections"
+                    onclick="navigate('collections')">Collections</a>
+                <a href="javascript:void(0)" class="nav-link" data-route="proofs"
+                    onclick="navigate('proofs')">Proofs</a>
+                <span class="nav-link" data-route="contact" style="cursor:pointer"
+                    onclick="navigate('contact')">Contact</span>
+
+                <div class="nav-actions">
+                    <button class="nav-icon-btn" onclick="openWishlist()" title="Wishlist">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        <span class="wish-count" id="wish-count">0</span>
+                    </button>
+                    <button class="nav-icon-btn" onclick="openCart()" title="Bag">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-search-overlay">
+        <div class="m-search-head">
+            <div class="nav-logo">SEARCH</div>
+            <button class="m-search-close" onclick="toggleMobileSearch(false)">✕</button>
+        </div>
+        <div class="m-search-input-wrap">
+            <input type="text" class="m-search-input" id="m-search-input" placeholder="Search Urbanix..."
+                onkeyup="if(event.key==='Enter') { handleGlobalSearch(this.value); toggleMobileSearch(false); }">
+        </div>
+        <div class="m-search-suggest">
+            <div class="m-suggest-tag" onclick="handleGlobalSearch('anime'); toggleMobileSearch(false);">Anime</div>
+            <div class="m-suggest-tag" onclick="handleGlobalSearch('valorant'); toggleMobileSearch(false);">Valorant
+            </div>
+            <div class="m-suggest-tag" onclick="handleGlobalSearch('marvel'); toggleMobileSearch(false);">Marvel</div>
+            <div class="m-suggest-tag" onclick="handleGlobalSearch('hoodie'); toggleMobileSearch(false);">Others</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const links = document.getElementById('nav-links');
+            const toggle = document.getElementById('mobile-toggle');
+            links.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function toggleMobileSearch(open) {
+            const overlay = document.getElementById('mobile-search-overlay');
+            if (open) {
+                overlay.classList.add('open');
+                setTimeout(() => document.getElementById('m-search-input').focus(), 100);
+                if (!window.isPoppingState) history.pushState({ overlay: 'search' }, '', '#search');
+            } else {
+                if (!window.isPoppingState && history.state && history.state.overlay === 'search') { history.back(); return; }
+                overlay.classList.remove('open');
+            }
+        }
+    </script>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="luxury-accent">URBANIX LUXURY STREETWEAR</div>
+        <div class="hero-glow"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="hero-divider"></div>
+        <div class="hero-grid-lines"></div>
+
+        <div class="hero-content-wrapper">
+            <!-- Left Side: Typography and CTAs -->
+            <div class="hero-text-content">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span> NEW DROP — ANIME COLLECTION
+                </div>
+                <h1 class="hero-hl">
+                    <span class="w1">WEAR YOUR</span><br>
+                    <span class="w2">OWN</span><br>
+                    <span class="w3">RULES.</span>
+                </h1>
+                <p class="hero-subtext">
+                    Premium streetwear designed for those who refuse to follow. Built for comfort, defined by culture.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#shop" class="btn-primary-glow">Explore Collection</a>
+                    <a href="#notify" class="btn-outline-glass" id="btn-get-notified">Get Notified</a>
+                </div>
+                <div class="hero-stats-row">
+                    <div class="stat-item">
+                        <span class="stat-val">100%</span>
+                        <span class="stat-lbl">Premium Cotton</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val">240</span>
+                        <span class="stat-lbl">GSM Heavyweight</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-val">24h</span>
+                        <span class="stat-lbl">Fast Dispatch</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Rotating Fashion Visuals -->
+            <div class="hero-visuals">
+                <!-- Static Overlays -->
+                <div class="glass-card-tag static-tag-1">
+                    <div class="g-tag-title">Premium Fit</div>
+                    <div class="g-tag-sub">240 GSM</div>
+                </div>
+                <div class="glass-card-tag static-tag-2">
+                    <div class="g-tag-title">New Drop</div>
+                    <div class="g-tag-sub">Collection 01</div>
+                </div>
+
+                <!-- 3D Carousel (10 Cards) -->
+                <div class="hero-carousel">
+                    <img src="image/anime/bleach/anime1.png" alt="Bleach Tee Vol 1" class="carousel-card c-card-1"
+                        loading="eager">
+                    <img src="image/anime/naruto/n2.png" alt="Naruto Tee Vol 2" class="carousel-card c-card-2"
+                        loading="eager">
+                    <img src="image/marvel/spider-man-2.png" alt="Spider-Man Tee Vol 2" class="carousel-card c-card-3"
+                        loading="eager">
+                    <img src="image/anime/naruto/n7-front.png" alt="Naruto Tee Vol 7 Front"
+                        class="carousel-card c-card-4" loading="lazy">
+                    <img src="image/valorant/valorant-agents/va7.png" alt="Valorant Tee Vol 7"
+                        class="carousel-card c-card-5" loading="lazy">
+                    <img src="image/anime/naruto/n3.png" alt="Naruto Tee Vol 3" class="carousel-card c-card-6"
+                        loading="lazy">
+                    <img src="image/anime/bleach/anime5.png" alt="Bleach Tee Vol 5" class="carousel-card c-card-7"
+                        loading="lazy">
+                    <img src="image/anime/naruto/n7-back.png" alt="Naruto Tee Vol 7 Back" class="carousel-card c-card-8"
+                        loading="lazy">
+                    <img src="image/marvel/spider-man-1.png" alt="Spider-Man Tee Vol 1" class="carousel-card c-card-9"
+                        loading="lazy">
+                    <img src="image/valorant/valorant-agents/va3.png" alt="Valorant Tee Vol 3"
+                        class="carousel-card c-card-10" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span class="marquee-item"><b>New Drop</b> <span class="marquee-dot">—</span> Collection 01</span>
+            <span class="marquee-item">Premium Streetwear <span class="marquee-dot">·</span> <b>Est. 2026</b></span>
+            <span class="marquee-item">Designed For The Streets <span class="marquee-dot">·</span> <b>Urbanix</b></span>
+            <span class="marquee-item"><b>Free Shipping</b> on orders above ₹1999</span>
+            <span class="marquee-item">Move Differently <span class="marquee-dot">·</span> <b>Wear
+                    Differently</b></span>
+            <span class="marquee-item">Refined For The <b>Culture</b></span>
+            <span class="marquee-item"><b>New Drop</b> <span class="marquee-dot">—</span> Collection 01</span>
+            <span class="marquee-item">Premium Streetwear <span class="marquee-dot">·</span> <b>Est. 2026</b></span>
+            <span class="marquee-item">Designed For The Streets <span class="marquee-dot">·</span> <b>Urbanix</b></span>
+            <span class="marquee-item"><b>Free Shipping</b> on orders above ₹1999</span>
+            <span class="marquee-item">Move Differently <span class="marquee-dot">·</span> <b>Wear
+                    Differently</b></span>
+            <span class="marquee-item">Refined For The <b>Culture</b></span>
+        </div>
+    </div>
+
+
+    <div style="height:40px;width:100%;max-width:100vw;"></div>
+
+    <!-- SHOP -->
+    <section id="shop">
+        <div class="sec-eyebrow reveal">Shop All</div>
+        <div class="sec-title reveal">THE COLLECTIONS</div>
+
+        <div class="shop-controls reveal">
+            <div class="filter-bar" id="filter-bar">
+                <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+                <button class="filter-btn" onclick="filterProducts('anime',this)">Anime</button>
+                <button class="filter-btn" onclick="filterProducts('valorant',this)">Valorant</button>
+                <button class="filter-btn" onclick="filterProducts('marvel',this)">Marvel</button>
+                <button class="filter-btn" onclick="filterProducts('others',this)">Others</button>
+            </div>
+            <div class="shop-meta">
+                <div class="sort-wrap">
+                    <select class="sort-select" id="sort-select" onchange="handleSort()">
+                        <option value="default">Featured</option>
+                        <option value="price-asc">Price: Low → High</option>
+                        <option value="price-desc">Price: High → Low</option>
+                        <option value="name-asc">Name A → Z</option>
+                    </select>
+                    <span class="sort-arrow">▾</span>
+                </div>
+                <div class="view-toggle">
+                    <button class="vtg-btn" title="2 columns" onclick="setView(2,this)">
+                        <svg width="14" height="14" viewBox="0 0 14 14">
+                            <rect x="0" y="0" width="6" height="6" fill="currentColor" />
+                            <rect x="8" y="0" width="6" height="6" fill="currentColor" />
+                            <rect x="0" y="8" width="6" height="6" fill="currentColor" />
+                            <rect x="8" y="8" width="6" height="6" fill="currentColor" />
+                        </svg>
+                    </button>
+                    <button class="vtg-btn active" title="4 columns" onclick="setView(4,this)">
+                        <svg width="14" height="14" viewBox="0 0 14 14">
+                            <rect x="0" y="0" width="2.5" height="6" fill="currentColor" />
+                            <rect x="3.8" y="0" width="2.5" height="6" fill="currentColor" />
+                            <rect x="7.7" y="0" width="2.5" height="6" fill="currentColor" />
+                            <rect x="11.5" y="0" width="2.5" height="6" fill="currentColor" />
+                            <rect x="0" y="8" width="2.5" height="6" fill="currentColor" />
+                            <rect x="3.8" y="8" width="2.5" height="6" fill="currentColor" />
+                            <rect x="7.7" y="8" width="2.5" height="6" fill="currentColor" />
+                            <rect x="11.5" y="8" width="2.5" height="6" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <div
+                style="grid-column:1/-1;text-align:center;padding:80px 0;color:var(--white2);font-family:'Barlow Condensed',sans-serif;letter-spacing:.2em;font-size:12px;">
+                LOADING COLLECTION…
+            </div>
+        </div>
+
+        <!-- PAGINATION ZONE -->
+        <div class="pagination-zone" id="pagination-zone">
+            <div class="load-more-wrap" id="load-more-wrap"></div>
+            <div class="pg-nav-wrap" id="pg-nav-wrap"></div>
+        </div>
+    </section>
+
+    <!-- PRODUCT PAGE OVERLAY -->
+    <div id="product-page">
+        <div id="pp-render-target"></div>
+    </div>
+
+    <div id="loc-modal">
+        <div class="loc-card">
+            <h2 class="loc-title">Enter Location</h2>
+            <input type="text" id="loc-field" class="loc-input" placeholder="e.g. Kolkata 700001">
+            <button class="loc-btn" onclick="saveLocation()">Save & Apply</button>
+        </div>
+    </div>
+
+    <script>
+        const RAZORPAY_LINK = "https://razorpay.com/payment-link/plink_SoAq2D2SO5NHi0";
+        let userLocation = "Kolkata 713101";
+
+        function openLocModal(e) {
+            if (e) e.stopPropagation();
+            document.getElementById('loc-modal').classList.add('open');
+        }
+        function saveLocation() {
+            const val = document.getElementById('loc-field').value;
+            if (val.trim()) {
+                userLocation = val.trim();
+                document.getElementById('pp-current-loc').textContent = userLocation;
+            }
+            document.getElementById('loc-modal').classList.remove('open');
+        }
+
+        function openContactModal() {
+            const m = document.getElementById('contact-modal');
+            m.style.display = 'flex';
+            setTimeout(() => m.classList.add('open'), 10);
+            if (!window.isPoppingState) history.pushState({ overlay: 'contact' }, '', '#contact');
+        }
+        function closeContactModal() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'contact') { history.back(); return; }
+            const m = document.getElementById('contact-modal');
+            m.classList.remove('open');
+            setTimeout(() => m.style.display = 'none', 400);
+        }
+
+        function openReviewModal() {}
+        function closeReviewModal() {}
+        function setReviewRating() {}
+        function submitReview() {}
+        function showReviewSuccess() {}
+
+        // Dynamic Product Page Logic
+        function openProductPage(id) {
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(id));
+            if (!p) return;
+
+            const seed = parseInt(id) || 0;
+            const rng = (s) => {
+                let x = Math.sin(s) * 10000;
+                return x - Math.floor(x);
+            };
+
+            const rating = (3.5 + rng(seed) * 1.3).toFixed(1);
+            const reviewsCount = Math.floor(rng(seed + 1) * 38) + 12; // Realistic counts under 50
+            const mrp = [699, 899, 1299, 1599, 1999][Math.floor(rng(seed + 2) * 5)];
+            const discount = Math.floor(((mrp - 499) / mrp) * 100);
+            const modelCode = `FS49-${p.cat.slice(0, 3).toUpperCase()}-${id}-P`;
+
+            // Real Color Logic
+            let color = "Black";
+            if (p.name.includes("Bleach Tee \u2013 Vol.3") || p.name.includes("Bleach Tee \u2013 Vol.4") || p.name.includes("Bleach Tee \u2013 Vol.5") || p.name === "Valorant Tee \u2013 Vol.22") color = "White";
+            if (p.name.includes("Fire Force Tee \u2013 Vol.4") || p.name === "Valorant Tee \u2013 Vol.4") color = "Green";
+
+            const colorHex = color === "White" ? "#fff" : (color === "Green" ? (p.name === "Valorant Tee \u2013 Vol.4" ? "#374b3e" : "#4caf50") : "#111");
+
+            // FIX: Safely handle image — always produce an array
+            let image = Array.isArray(p.image) ? [...p.image] : [p.image];
+
+            const isWhite = ["Bleach Tee \u2013 Vol.3", "Bleach Tee \u2013 Vol.4", "Bleach Tee \u2013 Vol.5", "Valorant Tee \u2013 Vol.22"].includes(p.name);
+            const isNaruto7 = p.name === "Naruto Tee \u2013 Vol.7";
+
+            // FIX: Use "image/universal-pics/" (no space) consistently
+            if (p.name.includes("Fire Force Tee \u2013 Vol.4") || p.name === "Valorant Tee \u2013 Vol.4") {
+                image.push('image/universal-pics/greenback.jpg');
+            } else if (isWhite) {
+                image.push('image/universal-pics/whiteback.jpg');
+            } else if (!isNaruto7 && image.length === 1) {
+                image.push('image/universal-pics/blackback.jpg');
+            }
+            image.push('image/universal-pics/sizechat.png');
+
+            const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+
+            const target = document.getElementById('pp-render-target');
+            target.innerHTML = `
+      <div class="pp-container">
+        <!-- LEFT -->
+        <div class="pp-left">
+          <div class="pp-thumbs">
+            ${image.map((img, i) => `
+              <div class="pp-thumb ${i === 0 ? 'active' : ''}" onclick="ppSwitchImage('${img}', this)">
+                <img src="${img}" alt="thumb">
+              </div>
+            `).join('')}
+          </div>
+          <div class="pp-main-img-wrap" id="pp-main-wrap" onmousemove="ppZoom(event, this)">
+            <img src="${image[0]}" alt="${p.name}" class="pp-main-img" id="pp-main-img">
+            <div class="pp-zoom-overlay" id="pp-zoom-overlay" style="background-image: url('${image[0]}')"></div>
+          </div>
+        </div>
+
+        <!-- MID -->
+        <div class="pp-mid">
+          <div class="pp-brand">URBANIX — Premium Streetwear</div>
+          <h1 class="pp-title">${p.name}</h1>
+          <div class="pp-rating-row">
+            <div class="pp-stars">
+              ${'★'.repeat(Math.floor(rating))}${'☆'.repeat(5 - Math.floor(rating))}
+            </div>
+            <span class="pp-rating-val">${rating} ★</span>
+            <span class="pp-review-count">${reviewsCount} ratings</span>
+          </div>
+
+          <div class="pp-price-section">
+            <div class="pp-discount-label">-${discount}%</div>
+            <div class="pp-price-row">
+              <span class="pp-price-now">₹499</span>
+              <span class="pp-price-mrp">M.R.P.: ₹${mrp}</span>
+            </div>
+            <div style="font-size:12px; color:var(--white2);">Exclusive of all taxes</div>
+          </div>
+
+          <div class="pp-trust-grid">
+            <div class="pp-trust-item">
+              <div class="pp-trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div class="pp-trust-text">Secure Payment</div>
+            </div>
+            <div class="pp-trust-item">
+              <div class="pp-trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="pp-trust-text">7 Day Warranty</div>
+            </div>
+            <div class="pp-trust-item">
+              <div class="pp-trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="pp-trust-text">Top Brand</div>
+            </div>
+            <div class="pp-trust-item">
+              <div class="pp-trust-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div class="pp-trust-text">Secure Transaction</div>
+            </div>
+          </div>
+
+          <div class="pp-variants">
+            <div class="pp-var-label">Color: <b>${color}</b></div>
+            <div class="pp-colors">
+              <div class="pp-color-dot active" style="background:${colorHex}"></div>
+            </div>
+          </div>
+
+          <div class="pp-variants">
+            <div class="pp-var-label">Size: <b id="selected-size">M</b></div>
+            <div class="pp-sizes">
+              ${['S', 'M', 'L', 'XL', 'XXL'].map(s => `
+                <button class="pp-size-btn ${s === 'M' ? 'active' : ''}" onclick="ppSelectSize('${s}', this)">${s}</button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pp-accordion">
+            <div class="pp-acc-item open">
+              <div class="pp-acc-head" onclick="ppToggleAcc(this)">
+                <h3>Product Details</h3>
+                <span class="pp-acc-icon">▾</span>
+              </div>
+              <div class="pp-acc-content">
+                <p><b>Material:</b> 100% Premium Cotton</p>
+                <p><b>Pattern:</b> High-Definition Digital Print</p>
+                <p><b>Fit Type:</b> Oversized Comfort Fit</p>
+                <p><b>Sleeve Type:</b> Half Sleeves</p>
+                <p><b>Collar Style:</b> Classic Round Neck</p>
+                <p><b>Country of Origin:</b> India</p>
+              </div>
+            </div>
+            <div class="pp-acc-item">
+              <div class="pp-acc-head" onclick="ppToggleAcc(this)">
+                <h3>About this item</h3>
+                <div class="pp-acc-content">
+                  <ul style="padding-left:16px; margin-top:8px;">
+                    <li>Breathable heavyweight cotton for premium feel.</li>
+                    <li>Reinforced stitching for durability.</li>
+                    <li>Eco-friendly vibrant prints that don't fade.</li>
+                    <li>Designed for the ultimate streetwear aesthetic.</li>
+                  </ul>
+                </div>
+                <span class="pp-acc-icon">▾</span>
+              </div>
+            </div>
+            <div class="pp-acc-item">
+              <div class="pp-acc-head" onclick="ppToggleAcc(this)">
+                <h3>Additional Information</h3>
+                <div class="pp-acc-content">
+                  <p><b>Manufacturer:</b> Urbanix Lifestyle Pvt. Ltd.</p>
+                  <p><b>Item Weight:</b> 280g</p>
+                  <p><b>Net Quantity:</b> 1 Count</p>
+                  <p><b>Generic Name:</b> Oversized Tee</p>
+                  <p><b>Model Name:</b> ${modelCode}</p>
+                </div>
+                <span class="pp-acc-icon">▾</span>
+              </div>
+            </div>
+            <div class="pp-acc-item">
+              <div class="pp-acc-head" onclick="ppToggleAcc(this)">
+                <h3>Contact Information</h3>
+                <div class="pp-acc-content">
+                  <div style="display:flex; flex-direction:column; gap:12px; padding-top:8px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--white2)"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <div style="display:flex; flex-direction:column;">
+                        <a href="tel:+917001034392" style="color:inherit; text-decoration:none;">+91 7001034392</a>
+                        <a href="tel:+918167014019" style="color:inherit; text-decoration:none;">+91 8167014019</a>
+                      </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--white2)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                      <a href="mailto:office.urbanix@gmail.com" style="color:inherit; text-decoration:none;">office.urbanix@gmail.com</a>
+                    </div>
+                  </div>
+                </div>
+                <span class="pp-acc-icon">▾</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="pp-right">
+          <div class="pp-side-price">₹499.00</div>
+          <div class="pp-side-delivery">
+            <div style="display:flex; align-items:center; gap:6px; cursor:pointer;" onclick="openLocModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="pp-current-loc">Deliver to ${userLocation}</span>
+            </div>
+          </div>
+          <div class="pp-stock">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><path d="M20 6L9 17l-5-5"/></svg>
+            In Stock
+          </div>
+          <div style="font-size:13px;">
+            Sold by <b>Urbanix Clothing</b> and Delivered by <b>Urbanix</b>.
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:13px; color:var(--white2);">Quantity:</span>
+            <span style="font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:600; color:var(--white); background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:4px 16px; letter-spacing:0.05em;">1</span>
+          </div>
+          <div class="pp-btns">
+            <button class="pp-btn-atc" onclick="ppAddToCart('${id}')">Add To Bag</button>
+            <button class="pp-btn-buy" onclick="buyNow('${id}', event)"><span>Buy Now</span></button>
+            <button class="pp-btn-wish ${wishlist.some(w => String(w.id) === String(id)) ? 'active' : ''}" onclick="toggleWish('${id}', event)" data-wish-id="${id}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align:middle; margin-right:6px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span class="wish-text">${wishlist.some(w => String(w.id) === String(id)) ? 'Remove from Wishlist' : 'Add to Wishlist'}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pp-container" style="padding-top:0;">
+        <div class="pp-reviews-section">
+          <div class="pp-rev-header">
+            <h2 class="pp-rev-title">Top Reviews From India</h2>
+          </div>
+          <div class="pp-empty-reviews">
+            <div class="empty-rev-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.3; margin-bottom:12px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            No reviews available yet.
+          </div>
+        </div>
+      </div>
+    `;
+
+            document.getElementById('product-page').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if (!window.isPoppingState) history.pushState({ overlay: 'product', productId: id }, '', '#product-' + id);
+        }
+
+        function closeProductPage() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'product') { history.back(); return; }
+            document.getElementById('product-page').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function ppSwitchImage(src, thumb) {
+            document.getElementById('pp-main-img').src = src;
+            document.getElementById('pp-zoom-overlay').style.backgroundImage = `url('${src}')`;
+            document.querySelectorAll('.pp-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+
+        function ppZoom(e, wrap) {
+            const zoom = document.getElementById('pp-zoom-overlay');
+            const { left, top, width, height } = wrap.getBoundingClientRect();
+            const x = ((e.pageX - left - window.scrollX) / width) * 100;
+            const y = ((e.pageY - top - window.scrollY) / height) * 100;
+            zoom.style.backgroundPosition = `${x}% ${y}%`;
+        }
+
+        function ppSelectSize(s, btn) {
+            document.getElementById('selected-size').textContent = s;
+            document.querySelectorAll('.pp-size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function ppToggleAcc(head) {
+            head.parentElement.classList.toggle('open');
+        }
+
+        function ppAddToCart(id) {
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(id));
+            const size = document.getElementById('selected-size').textContent;
+            // FIX: safely get first image whether array or string
+            const imgSrc = Array.isArray(p.image) ? p.image[0] : p.image;
+            addToCart({ name: p.name, price: 499, cat: p.catLabel, size: size, image: imgSrc });
+        }
+    </script>
+
+    <!-- WISHLIST PANEL (deduplicated — keeping only one) -->
+    <div id="wishlist-overlay" onclick="closeWishlist()"></div>
+
+    <!-- REVIEW MODAL UI -->
+    <div id="rev-modal">
+        <div class="rev-modal-card">
+            <button class="rev-modal-close" onclick="closeReviewModal()">✕</button>
+            <h2 class="rev-form-title">Write a Review</h2>
+
+            <div class="rev-form-row">
+                <label class="rev-form-label">Overall Rating</label>
+                <div class="star-rating">
+                    <span class="star" onclick="setReviewRating(1)">★</span>
+                    <span class="star" onclick="setReviewRating(2)">★</span>
+                    <span class="star" onclick="setReviewRating(3)">★</span>
+                    <span class="star" onclick="setReviewRating(4)">★</span>
+                    <span class="star" onclick="setReviewRating(5)">★</span>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="rev-form-row">
+                    <label class="rev-form-label">Ordered Color</label>
+                    <div class="rev-form-input" id="rev-color-display"
+                        style="background:transparent; border:none; padding:0; font-size:14px; font-weight:600;">Black
+                    </div>
+                </div>
+                <div class="rev-form-row">
+                    <label class="rev-form-label">Size Ordered</label>
+                    <select class="rev-form-input">
+                        <option>S</option>
+                        <option selected>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="rev-form-row">
+                <label class="rev-form-label">Review Description</label>
+                <textarea class="rev-form-input rev-form-text" placeholder="Write your review here..."></textarea>
+            </div>
+
+            <button class="btn-rev-submit" onclick="submitReview()">Send Review</button>
+        </div>
+    </div>
+
+    <div id="rev-success">
+        <div class="rev-success-icon">✓</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif; letter-spacing:.1em;">Your Review Is Added</h3>
+        <p style="font-size:12px; color:var(--white3); margin-top:10px;">Thank you for sharing your experience!</p>
+    </div>
+
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+        <div class="sec-eyebrow reveal">Social Proof</div>
+        <div class="sec-title reveal">WHAT THEY SAY</div>
+        <div class="reviews-grid">
+            <div class="review-card reveal">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"The anime tee is fire. Print quality is insane, fabric feels premium. Exactly
+                    what streetwear should feel like."</p>
+                <div class="review-author">Arjun M.</div>
+                <div class="review-loc">Mumbai, India</div>
+            </div>
+            <div class="review-card reveal reveal-d1">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Finally a brand that gets the aesthetic right. Clean cuts, quality fabric, bold
+                    prints. Urbanix is the real deal."</p>
+                <div class="review-author">Priya K.</div>
+                <div class="review-loc">Bengaluru, India</div>
+            </div>
+            <div class="review-card reveal reveal-d2">
+                <div class="review-stars">★★★★☆</div>
+                <p class="review-text">"The oversized fit is perfect. Print doesn't fade after washes. Quality is way
+                    above the price point."</p>
+                <div class="review-author">Rohan S.</div>
+                <div class="review-loc">Delhi, India</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTIFY -->
+    <section id="notify">
+        <div class="notify-bg">EARLY ACCESS</div>
+        <div class="notify-inner">
+            <div class="notify-eyebrow">Get Notified</div>
+            <h2 class="notify-title">DON'T MISS<br>THE DROP.</h2>
+            <p class="notify-sub">More Marvel / Valorant Collections Coming Soon. Be the first to access new drops,
+                limited pieces, and exclusive collabs.</p>
+            <div class="nform">
+                <input type="email" class="ninput" id="nemail" placeholder="your@email.com" />
+                <button class="nsub" onclick="handleNotify()">Notify Me</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast"></div>
+
+    <script>
+        // Smooth scroll for Get Notified button
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('btn-get-notified');
+            if (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var notify = document.getElementById('notify');
+                    if (notify) notify.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        });
+
+        const RAZORPAY_BASE_LINK = 'https://rzp.io/rzp/J1q7OOg';
+
+        function goToRazorpay(product) {
+            showToast(`Redirecting to Razorpay for ${product.name}…`);
+            setTimeout(() => window.open(RAZORPAY_BASE_LINK, '_blank'), 700);
+        }
+
+        // ── LOADER ──────────────────────────────────────────
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('loader').classList.add('hide'), 1700);
+        });
+
+        // ── REVEAL ON SCROLL ────────────────────────────────
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('in'), i * 60);
+                    revealObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: .1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        // ══════════════════════════════════════════════════════
+        //  STATE
+        // ══════════════════════════════════════════════════════
+        let ALL_PRODUCTS = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        let perPage = 20;
+        let currentFilter = 'all';
+        let currentSort = 'default';
+        let currentView = 4;
+        let cart = [];
+        let wishlist = [];
+        let currentSearchQuery = '';
+
+        // ══════════════════════════════════════════════════════
+        //  PRODUCTS DATA
+        //  FIX: Naruto Vol.7 duplicate image key fixed — uses array only
+        //  FIX: All "universal pics" paths changed to "universal-pics"
+        // ══════════════════════════════════════════════════════
+        function loadProductsFromServer() {
+            const NEW_DATA = [
+
+                // BLEACH
+                { id: 1, name: "Bleach Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime1.png", badge: "new" },
+                { id: 2, name: "Bleach Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime2.png" },
+                { id: 3, name: "Bleach Tee \u2013 Vol.3", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime3.png" },
+                { id: 4, name: "Bleach Tee \u2013 Vol.4", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime4.png", badge: "hot" },
+                { id: 5, name: "Bleach Tee \u2013 Vol.5", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime5.png" },
+                { id: 6, name: "Bleach Tee \u2013 Vol.6", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime6.png" },
+                { id: 7, name: "Bleach Tee \u2013 Vol.7", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/bleach/anime7.png" },
+
+                // NARUTO
+                { id: 8, name: "Naruto Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n1.png", badge: "new" },
+                { id: 9, name: "Naruto Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n2.png" },
+                { id: 10, name: "Naruto Tee \u2013 Vol.3", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n3.png" },
+                { id: 11, name: "Naruto Tee \u2013 Vol.4", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n4.png" },
+                { id: 12, name: "Naruto Tee \u2013 Vol.5", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n5.png", badge: "hot" },
+                { id: 13, name: "Naruto Tee \u2013 Vol.6", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/naruto/n6.png" },
+
+                // FIX: Removed duplicate image key — now correctly uses array
+                {
+                    id: 14,
+                    name: "Naruto Tee \u2013 Vol.7",
+                    cat: "anime", catLabel: "Anime", price: 499,
+                    image: [
+                        "image/anime/naruto/n7-front.png",
+                        "image/anime/naruto/n7-back.png"
+                    ]
+                },
+
+                // ONE PIECE
+                { id: 16, name: "One Piece Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/one-piece/op1.png", badge: "new" },
+                { id: 17, name: "One Piece Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/one-piece/op2.png" },
+
+                // DEMON SLAYER
+                { id: 18, name: "Demon Slayer Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/demon-slayer/ds1.png", badge: "new" },
+                { id: 19, name: "Demon Slayer Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/demon-slayer/ds2.png" },
+                { id: 20, name: "Demon Slayer Tee \u2013 Vol.3", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/demon-slayer/ds3.png" },
+
+                // JUJUTSU KAISEN
+                { id: 21, name: "Jujutsu Kaisen Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/jujutsu-kaisen/js1.png", badge: "new" },
+                { id: 22, name: "Jujutsu Kaisen Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/jujutsu-kaisen/js2.png" },
+
+                // SOLO LEVELLING
+                { id: 23, name: "Solo Levelling Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/solo-levelling/sl1.png", badge: "new" },
+
+                // POKEMON
+                { id: 24, name: "Pok\u00e9mon Tee \u2013 Vol.1", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/pokemon/poke1.png", badge: "new" },
+                { id: 25, name: "Pok\u00e9mon Tee \u2013 Vol.2", cat: "anime", catLabel: "Anime", price: 499, image: "image/anime/pokemon/poke2.png" },
+
+                // MARVEL
+                { id: 26, name: "Spider-Man Tee \u2013 Vol.1", cat: "marvel", catLabel: "Marvel", price: 499, image: "image/marvel/spider-man-1.png", badge: "new" },
+                { id: 27, name: "Spider-Man Tee \u2013 Vol.2", cat: "marvel", catLabel: "Marvel", price: 499, image: "image/marvel/spider-man-2.png" },
+                { id: 28, name: "Spider-Man Tee \u2013 Vol.3", cat: "marvel", catLabel: "Marvel", price: 499, image: "image/marvel/spider-man-3.png" },
+
+                // VALORANT AGENTS
+                { id: 29, name: "Valorant Tee \u2013 Vol.1", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va1.png", badge: "new" },
+                { id: 30, name: "Valorant Tee \u2013 Vol.2", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va2.png" },
+                { id: 31, name: "Valorant Tee \u2013 Vol.3", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va3.png" },
+                { id: 32, name: "Valorant Tee \u2013 Vol.4", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va4.png" },
+                { id: 33, name: "Valorant Tee \u2013 Vol.5", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va5.png" },
+                { id: 34, name: "Valorant Tee \u2013 Vol.6", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va6.1.png" },
+                { id: 35, name: "Valorant Tee \u2013 Vol.7", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va7.png" },
+                { id: 36, name: "Valorant Tee \u2013 Vol.8", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va8.png" },
+                { id: 37, name: "Valorant Tee \u2013 Vol.9", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va9.png" },
+                { id: 38, name: "Valorant Tee \u2013 Vol.10", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va10.png" },
+                { id: 39, name: "Valorant Tee \u2013 Vol.11", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va11.png" },
+                { id: 40, name: "Valorant Tee \u2013 Vol.12", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va12.png" },
+                { id: 41, name: "Valorant Tee \u2013 Vol.13", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va13.png" },
+                { id: 42, name: "Valorant Tee \u2013 Vol.14", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va14.png" },
+                { id: 43, name: "Valorant Tee \u2013 Vol.15", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va15.png" },
+                { id: 44, name: "Valorant Tee \u2013 Vol.16", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va16.png" },
+                { id: 45, name: "Valorant Tee \u2013 Vol.17", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va17.png" },
+                { id: 46, name: "Valorant Tee \u2013 Vol.18", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va18.png" },
+                { id: 47, name: "Valorant Tee \u2013 Vol.19", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va19.png" },
+                { id: 48, name: "Valorant Tee \u2013 Vol.20", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-agents/va20.png" },
+
+                // VALORANT GUNS
+                { id: 49, name: "Valorant Tee \u2013 Vol.21", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-guns/vg1.png" },
+                { id: 50, name: "Valorant Tee \u2013 Vol.22", cat: "valorant", catLabel: "Valorant", price: 499, image: "image/valorant/valorant-guns/vg2.png" }
+            ];
+
+            ALL_PRODUCTS = NEW_DATA.map(p => ({
+                ...p,
+                sizes: ['S', 'M', 'L', 'XL']
+            }));
+
+            filteredProducts = [...ALL_PRODUCTS];
+
+            const heroStatNum = document.querySelector('.stat-num');
+            if (heroStatNum) heroStatNum.textContent = ALL_PRODUCTS.length;
+
+            renderPage();
+            renderPagination();
+        }
+
+        // ── FILTER / SORT ────────────────────────────────────
+        function applyFilterSort() {
+            let products = [...ALL_PRODUCTS];
+
+            if (currentFilter !== 'all') {
+                products = products.filter(x => x.cat.toLowerCase() === currentFilter.toLowerCase());
+            }
+
+            if (currentSearchQuery) {
+                const q = currentSearchQuery.toLowerCase().trim();
+                products = products.map(item => {
+                    let score = 0;
+                    const name = item.name.toLowerCase();
+                    const cat = item.cat.toLowerCase();
+                    const catLabel = item.catLabel.toLowerCase();
+                    if (name === q) score = 1000;
+                    else if (name.startsWith(q)) score = 500;
+                    else if (name.includes(q)) score = 100;
+                    else if (cat === q || catLabel === q) score = 50;
+                    return { ...item, _score: score };
+                }).filter(x => x._score > 0);
+                products.sort((a, b) => b._score - a._score);
+            } else {
+                if (currentFilter === 'all') {
+                    const cats = ['anime', 'valorant', 'marvel', 'others'];
+                    const groups = cats.map(c => products.filter(x => x.cat === c));
+                    let maxLen = Math.max(...groups.map(g => g.length));
+                    let interweaved = [];
+                    for (let i = 0; i < maxLen; i++) {
+                        groups.forEach(g => { if (g[i]) interweaved.push(g[i]); });
+                    }
+                    products = interweaved;
+                }
+            }
+
+            if (currentSort !== 'default') {
+                products.sort((a, b) => {
+                    if (a._score !== undefined && b._score !== undefined && a._score !== b._score) return b._score - a._score;
+                    if (currentSort === 'price-asc') return a.price - b.price;
+                    if (currentSort === 'price-desc') return b.price - a.price;
+                    if (currentSort === 'name-asc') return a.name.localeCompare(b.name);
+                    return 0;
+                });
+            }
+
+            filteredProducts = products;
+            currentPage = 1;
+            renderPage();
+            renderPagination();
+        }
+
+        function handleGlobalSearch(query) {
+            const q = query.trim().toLowerCase();
+            currentSearchQuery = q;
+
+            if (typeof closeProductPage === 'function') closeProductPage();
+            if (document.getElementById('nav-links').classList.contains('active')) toggleMobileMenu();
+
+            const newUrl = q ? `/collections?search=${encodeURIComponent(q)}` : '/collections';
+            window.history.pushState({ search: q, route: 'collections' }, '', newUrl);
+
+            const shopSec = document.getElementById('shop');
+            if (shopSec) window.scrollTo({ top: shopSec.offsetTop - 100, behavior: 'smooth' });
+
+            currentFilter = 'all';
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase() === 'all');
+            });
+
+            applyFilterSort();
+            if (q) showToast(`Results for "${query}"`);
+            updateActiveNavLink('collections');
+        }
+
+        function navigate(route) {
+            const routes = { 'home': 'hero', 'collections': 'shop', 'proofs': 'reviews', 'contact': 'contact' };
+            const targetId = routes[route];
+            if (!targetId) return;
+
+            if (typeof closeProductPage === 'function') closeProductPage();
+            if (typeof toggleMobileMenu === 'function') {
+                const links = document.getElementById('nav-links');
+                if (links && links.classList.contains('active')) toggleMobileMenu();
+            }
+
+            if (route === 'contact') {
+                openContactModal();
+            } else {
+                const el = document.getElementById(targetId);
+                if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+            }
+
+            updateActiveNavLink(route);
+            const newUrl = route === 'home' ? '/' : `/${route}`;
+            history.pushState({ route }, '', newUrl);
+        }
+
+        function updateActiveNavLink(route) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('data-route') === route);
+            });
+        }
+
+        function checkUrlSearch() {
+            const params = new URLSearchParams(window.location.search);
+            const q = params.get('search');
+            const path = window.location.pathname.replace('/', '');
+            if (q) {
+                const input = document.getElementById('global-search-input');
+                if (input) input.value = q;
+                handleGlobalSearch(q);
+            } else if (path && path !== 'index.html') {
+                navigate(path);
+            }
+        }
+
+        function filterProducts(cat, btn) {
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            currentFilter = cat;
+            applyFilterSort();
+        }
+
+        function handleSort() {
+            currentSort = document.getElementById('sort-select').value;
+            applyFilterSort();
+        }
+
+        function setView(n, btn) {
+            currentView = n;
+            document.querySelectorAll('.vtg-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const grid = document.getElementById('product-grid');
+            grid.className = 'product-grid';
+            if (n !== 4) grid.classList.add('view-' + n);
+        }
+
+        // ── RENDER PRODUCT CARDS ─────────────────────────────
+        function renderPage() {
+            const grid = document.getElementById('product-grid');
+            const start = (currentPage - 1) * perPage;
+            const end = Math.min(start + perPage, filteredProducts.length);
+            const slice = filteredProducts.slice(start, end);
+
+            grid.style.opacity = '0';
+            setTimeout(() => {
+                grid.innerHTML = '';
+                grid.className = 'product-grid' + (currentView !== 4 ? ' view-' + currentView : '');
+
+                if (slice.length === 0) {
+                    const msg = currentSearchQuery
+                        ? `NO PRODUCTS FOUND FOR "${currentSearchQuery.toUpperCase()}"`
+                        : `NO PRODUCTS IN THIS CATEGORY YET`;
+                    grid.innerHTML = `
+                        <div style="grid-column:1/-1;text-align:center;padding:120px 48px;color:var(--white2);
+                                    font-family:'Barlow Condensed',sans-serif;letter-spacing:.2em;font-size:14px; background:rgba(255,255,255,0.02); border-radius:12px;">
+                          <div style="font-size:32px; margin-bottom:16px; opacity:0.5;">🔍</div>
+                          <div style="font-weight:500; color:var(--white); font-size:18px; margin-bottom:8px;">${msg}</div>
+                          <p style="margin-top:10px; font-size:12px; opacity:0.7; max-width:400px; margin-left:auto; margin-right:auto; line-height:1.6;">
+                            We couldn't find anything matching your search. Try adjusting your terms or browse our trending collections.
+                          </p>
+                          <div style="margin-top:32px; display:flex; flex-direction:column; gap:16px; align-items:center;">
+                             <span style="font-size:10px; letter-spacing:0.3em; text-transform:uppercase; opacity:0.5;">Trending Now</span>
+                             <div style="display:flex; gap:12px;">
+                                <button class="filter-btn" onclick="handleGlobalSearch('Valorant')">Valorant</button>
+                                <button class="filter-btn" onclick="handleGlobalSearch('Anime')">Anime</button>
+                                <button class="filter-btn" onclick="handleGlobalSearch('Marvel')">Marvel</button>
+                             </div>
+                          </div>
+                        </div>`;
+                    grid.style.opacity = '1';
+                    updateLoadMore();
+                    return;
+                }
+
+                slice.forEach((p, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'p-card';
+                    if (currentSearchQuery && p.name.toLowerCase().includes(currentSearchQuery)) {
+                        card.classList.add('search-match');
+                    }
+                    card.style.animationDelay = (i * 40) + 'ms';
+
+                    const badgeHtml = p.badge
+                        ? `<div class="p-card-badge badge-${p.badge}">${p.badge.toUpperCase()}</div>`
+                        : '';
+
+                    const sizesHtml = (p.sizes || []).slice(0, 4)
+                        .map(s => `<span class="size-dot">${s}</span>`).join('');
+
+                    let displayName = p.name;
+                    if (currentSearchQuery) {
+                        const regex = new RegExp(`(${currentSearchQuery})`, 'gi');
+                        displayName = p.name.replace(regex, '<mark style="background:rgba(255,255,255,0.15); color:var(--white); padding:0 2px;">$1</mark>');
+                    }
+
+                    // FIX: Always treat image as array for consistent rendering
+                    const imgArray = Array.isArray(p.image) ? p.image : [p.image];
+                    const firstImg = imgArray[0];
+                    const hasMultiple = imgArray.length > 1;
+
+                    card.innerHTML = `
+                        <div class="p-card-img" onclick="openProductPage('${p.id}')">
+                          ${badgeHtml}
+                          ${hasMultiple ? `
+                            <div class="p-card-nav">
+                              <button class="nav-arrow prev" onclick="switchImg('${p.id}', -1, event)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                              </button>
+                              <button class="nav-arrow next" onclick="switchImg('${p.id}', 1, event)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                              </button>
+                            </div>
+                            <div class="p-card-img-wrap" id="img-wrap-${p.id}" data-current="0" data-total="${imgArray.length}">
+                              ${imgArray.map(img => `<img src="${img}" alt="${p.name}" loading="lazy">`).join('')}
+                            </div>
+                          ` : `
+                            <img
+                              class="p-card-real-img"
+                              src="${firstImg}"
+                              alt="${p.name}"
+                              loading="lazy"
+                              onerror="this.style.opacity='0'"
+                            >
+                          `}
+                          <div class="p-card-actions">
+                            <button class="btn-buy-now" onclick="buyNow('${p.id}', event)">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                              </svg>
+                              <span>Buy Now</span>
+                            </button>
+                            <button class="btn-add" onclick="quickAdd('${p.id}', event)">+ Bag</button>
+                            <button class="btn-wish ${wishlist.some(w => String(w.id) === String(p.id)) ? 'active' : ''}" onclick="toggleWish('${p.id}', event)" title="Wishlist" data-wish-id="${p.id}">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <button class="p-card-wish-float ${wishlist.some(w => String(w.id) === String(p.id)) ? 'active' : ''}" onclick="toggleWish('${p.id}', event)" title="Wishlist" data-wish-id="${p.id}">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="p-card-info" onclick="openProductPage('${p.id}')">
+                          <div class="p-card-cat">${p.catLabel}</div>
+                          <div class="p-card-name">${displayName}</div>
+                          <div class="p-card-bottom">
+                            <div class="p-card-price">₹${p.price.toLocaleString('en-IN')}</div>
+                            <div class="p-card-sizes">${sizesHtml}</div>
+                          </div>
+                        </div>
+                        <div class="p-card-mob-actions">
+                          <button class="p-mob-buy" onclick="buyNow('${p.id}', event)">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            Buy Now
+                          </button>
+                          <button class="p-mob-bag" onclick="quickAdd('${p.id}', event)">+ Bag</button>
+                        </div>`;
+
+                    grid.appendChild(card);
+                });
+
+                grid.style.opacity = '1';
+                updateLoadMore();
+            }, 150);
+        }
+
+        function switchImg(id, dir, e) {
+            if (e) e.stopPropagation();
+            const wrap = document.getElementById(`img-wrap-${id}`);
+            if (!wrap) return;
+            let current = parseInt(wrap.getAttribute('data-current') || '0');
+            const total = parseInt(wrap.getAttribute('data-total') || '1');
+            current += dir;
+            if (current < 0) current = total - 1;
+            if (current >= total) current = 0;
+            wrap.setAttribute('data-current', current);
+            wrap.style.transform = `translateX(-${current * 100}%)`;
+        }
+
+        function updateProgress() { /* intentionally empty */ }
+
+        function updateLoadMore() {
+            const totalPages = Math.ceil(filteredProducts.length / perPage);
+            const wrap = document.getElementById('load-more-wrap');
+            if (currentPage >= totalPages) {
+                wrap.innerHTML = '';
+            } else {
+                wrap.innerHTML = `<button class="btn-load-more" onclick="loadMore()"><span>Load More</span></button>`;
+            }
+        }
+
+        function loadMore() {
+            const totalPages = Math.ceil(filteredProducts.length / perPage);
+            if (currentPage >= totalPages) return;
+            currentPage++;
+            renderPage();
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredProducts.length / perPage);
+            const wrap = document.getElementById('pg-nav-wrap');
+            if (totalPages <= 1) { wrap.innerHTML = ''; return; }
+            let html = `<div class="pg-nav">`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            html += `</div>`;
+            wrap.innerHTML = html;
+        }
+
+        function goToPage(n) {
+            currentPage = n;
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+            renderPage();
+            renderPagination();
+        }
+
+        // ── CART ──────────────────────────────────────────────
+        function quickAdd(id, e) {
+            e.stopPropagation();
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(id));
+            if (!p) return;
+            // FIX: safely get first image
+            const imgSrc = Array.isArray(p.image) ? p.image[0] : p.image;
+            addToCart({ name: p.name, price: p.price, cat: p.catLabel, size: p.sizes[0], image: imgSrc });
+        }
+
+        function addToCart(item) {
+            const ex = cart.find(i => i.name === item.name && i.size === item.size);
+            if (ex) { ex.qty++; } else { cart.push({ ...item, qty: 1 }); }
+            updateCartUI();
+            showToast(`${item.name} added to bag`);
+            openCart();
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            document.getElementById('cart-total').textContent = '₹' + total.toLocaleString('en-IN');
+
+            const list = document.getElementById('cart-items-list');
+            if (!cart.length) {
+                list.innerHTML = `
+                    <div class="cart-empty">
+                      <div class="cart-empty-icon">🛍</div>
+                      <div class="cart-empty-title">Your bag is empty</div>
+                      <div class="cart-empty-sub">Add items to start your Urbanix experience</div>
+                    </div>`;
+                return;
+            }
+            list.innerHTML = cart.map((item, idx) => `
+                <div class="cart-item">
+                  <div class="cart-item-thumb">
+                    <img src="${item.image}" alt="${item.name}">
+                  </div>
+                  <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">₹${item.price.toLocaleString('en-IN')}</div>
+                    <div class="cart-item-controls">
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+                        <span class="qty-num">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+                      </div>
+                      <button class="cart-item-remove" onclick="removeItem(${idx})">Remove</button>
+                    </div>
+                  </div>
+                  <div class="cart-item-price" style="text-align:right;">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+                </div>`).join('');
+        }
+
+        function changeQty(idx, d) { cart[idx].qty += d; if (cart[idx].qty <= 0) cart.splice(idx, 1); updateCartUI(); }
+        function removeItem(idx) { cart.splice(idx, 1); updateCartUI(); }
+        function openCart() {
+            document.getElementById('cart-panel').classList.add('open');
+            document.getElementById('cart-overlay').classList.add('show');
+            if (!window.isPoppingState) history.pushState({ overlay: 'cart' }, '', '#cart');
+        }
+        function closeCart() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'cart') { history.back(); return; }
+            document.getElementById('cart-panel').classList.remove('open');
+            document.getElementById('cart-overlay').classList.remove('show');
+        }
+
+        function checkout() {
+            if (!cart.length) { showToast('Your bag is empty!'); return; }
+            showToast('Redirecting to Razorpay…');
+            setTimeout(() => window.open(RAZORPAY_LINK, '_blank'), 700);
+            closeCart();
+        }
+
+        // ── BUY NOW ───────────────────────────────────────────
+        let _coPid = null;
+        function buyNow(id, e) {
+            if (e) e.stopPropagation();
+            _coPid = String(id);
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(id));
+            if (!p) return;
+
+            let color = 'Black';
+            if (['Bleach Tee \u2013 Vol.3', 'Bleach Tee \u2013 Vol.4', 'Bleach Tee \u2013 Vol.5', 'Valorant Tee \u2013 Vol.22'].includes(p.name)) color = 'White';
+            if (p.name.includes('Fire Force Tee \u2013 Vol.4') || p.name === 'Valorant Tee \u2013 Vol.4') color = 'Green';
+
+            // FIX: safely get first image
+            const img = Array.isArray(p.image) ? p.image[0] : p.image;
+
+            document.getElementById('co-img').src = img;
+            document.getElementById('co-name').textContent = p.name;
+            document.getElementById('co-color').textContent = 'Color: ' + color;
+            document.getElementById('co2-img').src = img;
+            document.getElementById('co2-name').textContent = p.name;
+            document.getElementById('co2-color').textContent = 'Color: ' + color;
+
+            document.querySelectorAll('.checkout-form-input').forEach(i => i.classList.remove('error'));
+            document.getElementById('checkout-step1').style.display = 'block';
+            document.getElementById('checkout-step2').style.display = 'none';
+            document.getElementById('checkout-overlay-bg').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if (!window.isPoppingState) history.pushState({ overlay: 'checkout', productId: id }, '', '#checkout-' + id);
+        }
+
+        function closeCheckout() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'checkout') { history.back(); return; }
+            document.getElementById('checkout-overlay-bg').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function goToCheckoutStep2() {
+            const fields = [
+                { id: 'co-fullname' }, { id: 'co-phone' }, { id: 'co-address' },
+                { id: 'co-city' }, { id: 'co-state' }, { id: 'co-pin' }
+            ];
+            let valid = true;
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                el.classList.remove('error');
+                if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+            });
+            if (!valid) { showToast('Please fill all required fields'); return; }
+
+            // Validate Phone with intl-tel-input
+            const phoneEl = document.getElementById('co-phone');
+            if (window.iti && !window.iti.isValidNumber()) {
+                phoneEl.classList.add('error');
+                showToast('Enter a valid phone number'); return;
+            }
+
+            const pin = document.getElementById('co-pin');
+            if (!/^\d{6}$/.test(pin.value.trim())) {
+                pin.classList.add('error');
+                showToast('Enter a valid 6-digit PIN code'); return;
+            }
+            document.getElementById('checkout-step1').style.display = 'none';
+            const s2 = document.getElementById('checkout-step2');
+            s2.style.display = 'block';
+            s2.scrollTop = 0;
+        }
+
+        function goBackToStep1() {
+            document.getElementById('checkout-step2').style.display = 'none';
+            document.getElementById('checkout-step1').style.display = 'block';
+        }
+
+        async function proceedToPayment() {
+            const btn = document.querySelector('.checkout-btn-pay');
+            btn.disabled = true;
+            btn.textContent = 'Saving order…';
+
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(_coPid));
+            const selectedSize = document.getElementById('selected-size')?.textContent || 'M';
+
+            const orderData = {
+                customerName: document.getElementById('co-fullname').value.trim(),
+                phone: window.iti ? window.iti.getNumber() : document.getElementById('co-phone').value.trim(),
+                address: {
+                    street: document.getElementById('co-address').value.trim(),
+                    city: document.getElementById('co-city').value.trim(),
+                    state: document.getElementById('co-state').value.trim(),
+                    pin: document.getElementById('co-pin').value.trim(),
+                },
+                productName: p ? p.name : 'Unknown Product',
+                size: selectedSize,
+                quantity: 1,
+                total: 599,
+                paymentMethod: 'Razorpay',
+            };
+
+            try {
+                const res = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData),
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Order failed');
+                console.log('✅ Order saved:', data.orderId);
+            } catch (err) {
+                console.error('Order save failed:', err.message);
+                // Still proceed to payment even if DB save fails
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '&#128274; PROCEED TO PAYMENT &mdash; ₹599';
+            }
+
+            closeCheckout();
+            window.open('https://rzp.io/rzp/J1q7OOg', '_blank');
+        }
+
+        // ── MISC ──────────────────────────────────────────────
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        function handleNotify() {
+            const val = document.getElementById('nemail').value;
+            if (!val || !val.includes('@')) { showToast('Please enter a valid email.'); return; }
+            document.getElementById('nemail').value = '';
+            const btn = document.querySelector('.nsub');
+            btn.textContent = "You're In ✓";
+            showToast('Welcome to the Urbanix family!');
+            setTimeout(() => btn.textContent = 'Notify Me', 3500);
+        }
+
+        function selectSize(btn) {
+            btn.closest('.featured-sizes').querySelectorAll('.sz-pill').forEach(b => b.classList.remove('sel'));
+            btn.classList.add('sel');
+        }
+
+        // ── WISHLIST ──────────────────────────────────────────
+        function toggleWish(id, e) {
+            if (e) e.stopPropagation();
+            const p = ALL_PRODUCTS.find(x => String(x.id) === String(id));
+            if (!p) return;
+            const idx = wishlist.findIndex(w => String(w.id) === String(id));
+            const isAdded = idx === -1;
+
+            if (!isAdded) {
+                wishlist.splice(idx, 1);
+                showToast(`Removed from wishlist`);
+            } else {
+                wishlist.push(p);
+                showToast(`Added to wishlist`);
+            }
+            updateWishlistUI();
+
+            // Optimistic UI updates
+            const buttons = document.querySelectorAll(`[data-wish-id="${id}"]`);
+            buttons.forEach(btn => {
+                if (isAdded) {
+                    btn.classList.add('active');
+                    const span = btn.querySelector('.wish-text');
+                    if (span) span.textContent = 'Remove from Wishlist';
+                } else {
+                    btn.classList.remove('active');
+                    const span = btn.querySelector('.wish-text');
+                    if (span) span.textContent = 'Add to Wishlist';
+                }
+            });
+        }
+
+        function updateWishlistUI() {
+            const count = wishlist.length;
+            document.getElementById('wish-count').textContent = count;
+            const list = document.getElementById('wishlist-items-list');
+            if (!wishlist.length) {
+                list.innerHTML = `
+                    <div class="cart-empty">
+                      <div class="cart-empty-icon">♡</div>
+                      <div class="cart-empty-title">Wishlist is empty</div>
+                      <div class="cart-empty-sub">Save your favorite pieces for later</div>
+                    </div>`;
+                return;
+            }
+            list.innerHTML = wishlist.map((item, idx) => {
+                const imgSrc = Array.isArray(item.image) ? item.image[0] : item.image;
+                return `
+                    <div class="wish-item">
+                      <div class="wish-item-thumb">
+                        <img src="${imgSrc}" alt="${item.name}">
+                      </div>
+                      <div class="wish-item-info">
+                        <div class="wish-item-name">${item.name}</div>
+                        <div class="wish-item-price">₹${item.price.toLocaleString('en-IN')}</div>
+                        <button class="wish-item-remove" onclick="toggleWish('${item.id}', event)">Remove</button>
+                      </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function openWishlist() {
+            document.getElementById('wishlist-panel').classList.add('open');
+            document.getElementById('wish-overlay').classList.add('show');
+            if (!window.isPoppingState) history.pushState({ overlay: 'wishlist' }, '', '#wishlist');
+        }
+
+        function closeWishlist() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'wishlist') { history.back(); return; }
+            document.getElementById('wishlist-panel').classList.remove('open');
+            document.getElementById('wish-overlay').classList.remove('show');
+        }
+
+        // ── BOOT ─────────────────────────────────────────────
+        window.isPoppingState = false;
+        loadProductsFromServer();
+        checkUrlSearch();
+
+        // Initialize International Phone Input
+        function initPhoneInput() {
+            const input = document.querySelector("#co-phone");
+            if (input && window.intlTelInput) {
+                window.iti = window.intlTelInput(input, {
+                    initialCountry: "in",
+                    separateDialCode: true,
+                    dropdownContainer: document.body,
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+                });
+            }
+        }
+        // Small delay to ensure DOM and script are ready
+        setTimeout(initPhoneInput, 500);
+
+        window.addEventListener('popstate', (e) => {
+            window.isPoppingState = true;
+
+            document.getElementById('product-page').classList.remove('open');
+            document.getElementById('cart-panel').classList.remove('open');
+            document.getElementById('cart-overlay').classList.remove('show');
+            document.getElementById('wishlist-panel').classList.remove('open');
+            document.getElementById('wish-overlay').classList.remove('show');
+            document.getElementById('checkout-overlay-bg').classList.remove('open');
+            const searchOverlay = document.getElementById('mobile-search-overlay');
+            if (searchOverlay) searchOverlay.classList.remove('open');
+            const contactModal = document.getElementById('contact-modal');
+            if (contactModal) {
+                contactModal.classList.remove('open');
+                contactModal.style.display = 'none';
+            }
+            document.getElementById('nav-links').classList.remove('active');
+            document.getElementById('mobile-toggle').classList.remove('active');
+            document.getElementById('nav-overlay').classList.remove('show');
+
+            document.body.style.overflow = '';
+
+            if (e.state && e.state.overlay) {
+                switch (e.state.overlay) {
+                    case 'product': openProductPage(e.state.productId); break;
+                    case 'cart': openCart(); break;
+                    case 'wishlist': openWishlist(); break;
+                    case 'checkout': buyNow(e.state.productId); break;
+                    case 'contact': openContactModal(); break;
+                    case 'search': toggleMobileSearch(true); break;
+                    case 'menu': if (window.toggleMobileMenu) window.toggleMobileMenu(true); break;
+                }
+            } else if (e.state && e.state.route && e.state.route !== 'contact') {
+                navigate(e.state.route);
+            }
+
+            setTimeout(() => { window.isPoppingState = false; }, 50);
+        });
+    </script>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal">
+        <div class="contact-card">
+            <button class="contact-close" onclick="closeContactModal()">✕</button>
+            <h2 class="contact-title">Contact Urbanix</h2>
+
+            <div class="contact-item">
+                <svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <div style="display:flex; flex-direction:column;">
+                    <a href="tel:+917001034392">+91 7001034392</a>
+                    <a href="tel:+918167014019">+91 8167014019</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <a href="mailto:office.urbanix@gmail.com">office.urbanix@gmail.com</a>
+            </div>
+
+            <p style="font-size:12px; color:var(--white3); margin-top:32px; letter-spacing:.05em;">Our team is available
+                Mon-Sat, 10AM - 7PM IST</p>
+        </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAV BAR -->
+    <div id="mobile-bottom-bar">
+        <button class="mbb-btn active" onclick="navigate('home'); setMbbActive(this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z" />
+                <path d="M9 21V12h6v9" />
+            </svg>
+            Home
+        </button>
+        <button class="mbb-btn" onclick="navigate('collections'); setMbbActive(this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Shop
+        </button>
+        <button class="mbb-btn" onclick="toggleMobileSearch(true)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+            </svg>
+            Search
+        </button>
+        <button class="mbb-btn" onclick="openWishlist()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+            Saved
+            <span class="mbb-badge" id="mbb-wish-count" style="display:none">0</span>
+        </button>
+        <button class="mbb-btn" onclick="openCart()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            Bag
+            <span class="mbb-badge cart-bg" id="mbb-cart-count" style="display:none">0</span>
+        </button>
+    </div>
+
+    <script>
+        function setMbbActive(btn) {
+            document.querySelectorAll('#mobile-bottom-bar .mbb-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function closeMobileMenu() {
+            if (!window.isPoppingState && history.state && history.state.overlay === 'menu') { history.back(); return; }
+            document.getElementById('nav-links').classList.remove('active');
+            document.getElementById('mobile-toggle').classList.remove('active');
+            document.getElementById('nav-overlay').classList.remove('show');
+        }
+
+        // Patch toggleMobileMenu to show overlay
+        const _origToggle = window.toggleMobileMenu;
+        window.toggleMobileMenu = function (forceOpen) {
+            const links = document.getElementById('nav-links');
+            const toggle = document.getElementById('mobile-toggle');
+            const overlay = document.getElementById('nav-overlay');
+            const isOpen = links.classList.contains('active');
+            let willOpen = forceOpen !== undefined ? forceOpen : !isOpen;
+
+            if (willOpen && !isOpen) {
+                links.classList.add('active');
+                toggle.classList.add('active');
+                overlay.classList.add('show');
+                if (!window.isPoppingState) history.pushState({ overlay: 'menu' }, '', '#menu');
+            } else if (!willOpen && isOpen) {
+                if (!window.isPoppingState && history.state && history.state.overlay === 'menu') { history.back(); return; }
+                links.classList.remove('active');
+                toggle.classList.remove('active');
+                overlay.classList.remove('show');
+            }
+        };
+
+        // Patch updateCartUI to sync bottom bar badge
+        const _origUpdateCartUI = window.updateCartUI;
+        window.updateCartUI = function () {
+            _origUpdateCartUI && _origUpdateCartUI();
+            const count = (window.cart || []).reduce((s, i) => s + i.qty, 0);
+            const badge = document.getElementById('mbb-cart-count');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+        };
+
+        // Patch updateWishlistUI to sync bottom bar badge
+        const _origUpdateWishlistUI = window.updateWishlistUI;
+        window.updateWishlistUI = function () {
+            _origUpdateWishlistUI && _origUpdateWishlistUI();
+            const count = (window.wishlist || []).length;
+            const badge = document.getElementById('mbb-wish-count');
+            if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+        };
+
+        // Close mobile nav when a nav link is clicked
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) closeMobileMenu();
+            });
+        });
+    </script>
+
+    <!-- CHECKOUT OVERLAY SYSTEM -->
+    <div id="checkout-overlay-bg" onclick="if(event.target===this)closeCheckout()">
+
+        <!-- STEP 1: Customer Details -->
+        <div class="checkout-modal" id="checkout-step1">
+            <div class="checkout-modal-header">
+                <span class="checkout-modal-title">Your Details</span>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="checkout-step-badge">Step 1 of 2</span>
+                    <button class="checkout-close" onclick="closeCheckout()" title="Close">&times;</button>
+                </div>
+            </div>
+            <div class="checkout-product-row">
+                <img class="checkout-product-img" id="co-img" src="" alt="">
+                <div class="checkout-product-info">
+                    <div class="checkout-product-name" id="co-name"></div>
+                    <div class="checkout-product-meta">
+                        <span id="co-color"></span>
+                        <span>Qty: 1</span>
+                    </div>
+                </div>
+                <div class="checkout-product-price">₹599</div>
+                <div
+                    style="font-size:11px; color:var(--white3); font-weight:400; letter-spacing:0.03em; margin-top:3px;">
+                    ₹499 + ₹100 delivery</div>
+            </div>
+            <div class="checkout-form-body">
+                <div class="checkout-form-group">
+                    <label class="checkout-form-label" for="co-fullname">Full Name *</label>
+                    <input class="checkout-form-input" id="co-fullname" type="text" placeholder="Enter your full name"
+                        autocomplete="name">
+                </div>
+                <div class="checkout-form-group">
+                    <label class="checkout-form-label" for="co-phone">Phone Number *</label>
+                    <input class="checkout-form-input" id="co-phone" type="tel" placeholder="10-digit mobile number"
+                        autocomplete="tel" maxlength="10">
+                </div>
+                <div class="checkout-form-group">
+                    <label class="checkout-form-label" for="co-address">Full Address *</label>
+                    <input class="checkout-form-input" id="co-address" type="text"
+                        placeholder="House/Flat No., Street, Area" autocomplete="street-address">
+                </div>
+                <div class="checkout-form-row">
+                    <div class="checkout-form-group">
+                        <label class="checkout-form-label" for="co-city">City *</label>
+                        <input class="checkout-form-input" id="co-city" type="text" placeholder="City"
+                            autocomplete="address-level2">
+                    </div>
+                    <div class="checkout-form-group">
+                        <label class="checkout-form-label" for="co-state">State *</label>
+                        <input class="checkout-form-input" id="co-state" type="text" placeholder="State"
+                            autocomplete="address-level1">
+                    </div>
+                </div>
+                <div class="checkout-form-group">
+                    <label class="checkout-form-label" for="co-pin">PIN Code *</label>
+                    <input class="checkout-form-input" id="co-pin" type="text" placeholder="6-digit PIN code"
+                        maxlength="6" autocomplete="postal-code" inputmode="numeric">
+                </div>
+                <button class="checkout-btn-continue" onclick="goToCheckoutStep2()">Continue to Checkout &rarr;</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Billing / Checkout -->
+        <div class="checkout-modal" id="checkout-step2" style="display:none;">
+            <div class="checkout-modal-header">
+                <span class="checkout-modal-title">Order Summary</span>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span class="checkout-step-badge">Step 2 of 2</span>
+                    <button class="checkout-close" onclick="closeCheckout()" title="Close">&times;</button>
+                </div>
+            </div>
+            <div class="checkout-product-row">
+                <img class="checkout-product-img" id="co2-img" src="" alt="">
+                <div class="checkout-product-info">
+                    <div class="checkout-product-name" id="co2-name"></div>
+                    <div class="checkout-product-meta">
+                        <span id="co2-color"></span>
+                        <span>Qty: 1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="billing-section">
+                <div class="billing-section-title">Price Details</div>
+                <div class="billing-row">
+                    <span class="billing-label">MRP</span>
+                    <span class="billing-val strike">₹1,599</span>
+                </div>
+                <div class="billing-row">
+                    <span class="billing-label">Discount (68% OFF)</span>
+                    <span style="color:#5cb85c;font-family:'Barlow Condensed',sans-serif;font-size:15px;">&minus;
+                        ₹1,100</span>
+                </div>
+                <div class="billing-row">
+                    <span class="billing-label">Selling Price</span>
+                    <span class="billing-val">₹499</span>
+                </div>
+                <div class="billing-divider"></div>
+                <div class="billing-row">
+                    <span class="billing-label">GST / Taxes</span>
+                    <span class="billing-val">+ ₹25</span>
+                </div>
+                <div class="billing-row">
+                    <span class="billing-label">Delivery Charges</span>
+                    <span class="billing-val">+ ₹75</span>
+                </div>
+            </div>
+            <div class="billing-total-row">
+                <span class="billing-total-label">Total Amount</span>
+                <span class="billing-total-val">₹599</span>
+            </div>
+            <div class="billing-payment-section">
+                <div class="billing-section-title">Payment Method</div>
+                <div class="payment-upi-card">
+                    <div class="payment-upi-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <path d="M2 10h20" />
+                        </svg>
+                    </div>
+                    <div class="payment-upi-info">
+                        <div class="payment-upi-title">UPI / Online Payment</div>
+                        <div class="payment-upi-sub">Pay via PhonePe, GPay, Paytm &amp; all UPI apps</div>
+                    </div>
+                    <div class="payment-selected-dot"></div>
+                </div>
+                <div class="payment-secure-note">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    100% Secure &middot; SSL Encrypted &middot; Powered by Razorpay
+                </div>
+                <button class="checkout-btn-pay" onclick="proceedToPayment()">
+                    &#128274; PROCEED TO PAYMENT &mdash; ₹599
+                </button>
+                <button class="checkout-btn-back" onclick="goBackToStep1()">&larr; Edit Details</button>
+            </div>
+        </div>
+
+    </div>
+    <!-- END CHECKOUT OVERLAY -->
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
+
+</body>
+
+</html>
